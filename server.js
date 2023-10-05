@@ -1,11 +1,17 @@
 import express from 'express'
-import http from 'http'
+import https from 'https'
 import { Server as SocketIOServer } from 'socket.io'
 // import path from "path";
 import { v4 as uuidv4 } from 'uuid'
+import fs from "fs"
+
+const options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+}
 
 const app = express()
-const server = http.createServer(app)
+const server = https.createServer(options, app)
 const io = new SocketIOServer(server)
 
 // eslint-disable-next-line no-undef
